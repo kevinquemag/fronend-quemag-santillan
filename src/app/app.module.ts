@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //PrimeNg MOdules
 import {ButtonModule} from 'primeng/button';
-
+import {InputTextModule} from 'primeng/inputtext';
 
 //demas
 import { ShoesComponent } from './shoes/shoes.component';
@@ -30,6 +30,8 @@ import { UnderMaintenanceComponent } from './under-maintenance/under-maintenance
     BrowserModule,
     AppRoutingModule,
     ButtonModule,
+    InputTextModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

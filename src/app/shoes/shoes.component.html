@@ -1,1 +1,15 @@
-<p>shoes works!</p>
+<input type="text" pInputText [(ngModel)]="name" />
+<button pButton type="button" label="Click" (click)="changeName()"></button>
+{{name}}
+<br>
+Edad: {{age}}
+<br>
+Fecha de nacimiento: {{birthdate}}
+<br>
+Casado?: {{married}}
+<br>
+Nombre Completo: {{getFullName()}}
+<br>
+Nombre Completo: {{fullName}}
+
+

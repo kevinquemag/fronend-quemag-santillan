@@ -5,11 +5,32 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './shoes.component.html',
   styleUrls: ['./shoes.component.css']
 })
-export class ShoesComponent implements OnInit {
+export class ShoesComponent implements OnInit{
 
-  constructor() { }
+name: string = 'JUAN';
+lastname: string = 'PEREZ'
+age: number = 20;
+birthdate: Date = new Date();
+married: boolean = true;
 
-  ngOnInit(): void {
-  }
+constructor(){
+
+}
+
+ngOnInit(){
+
+}
+
+getFullName(): string{
+  return `${this.name} ${this.lastname}`;
+}
+
+get fullName(): string{
+  return `${this.name} ${this.lastname}`;
+}
+
+changeName(){
+  this.name = 'PEDRO';
+}
 
 }
