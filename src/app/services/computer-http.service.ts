@@ -14,7 +14,7 @@ import { ComputerModel } from '../models/computer.model';
 
 export class ComputerHttpService {
 
-  API_URL_PRIVATE: string = environment.API_URL_PRIVATE;
+  API_URL_AUTHENTICATION: string = environment.API_URL_AUTHENTICATION;
   API_URL_PUBLIC: string = environment.API_URL_PUBLIC;
 
   constructor(private httpClient: HttpClient) {
@@ -22,7 +22,7 @@ export class ComputerHttpService {
   }
 
   getAll(): Observable<ServerResponse> {
-    const url = this.API_URL_PRIVATE + '/computers';
+    const url = this.API_URL_AUTHENTICATION + '/computers';
     return this.httpClient.get<ServerResponse>(url)
       .pipe(
         map(response => response),
@@ -31,7 +31,7 @@ export class ComputerHttpService {
   }
 
   getOne(id: number): Observable<ServerResponse> {
-    const url = this.API_URL_PRIVATE + '/computers/' + id;
+    const url = this.API_URL_AUTHENTICATION + '/computers/' + id;
     return this.httpClient.get<ServerResponse>(url)
       .pipe(
         map(response => response),
@@ -40,7 +40,7 @@ export class ComputerHttpService {
   }
 
   store(computer: ComputerModel): Observable<ServerResponse> {
-    const url = this.API_URL_PRIVATE + '/computers';
+    const url = this.API_URL_AUTHENTICATION + '/computers';
     return this.httpClient.post<ServerResponse>(url, computer)
       .pipe(
         map(response => response),
@@ -49,7 +49,7 @@ export class ComputerHttpService {
   }
 
   update(id: number | undefined, computer: ComputerModel): Observable<ServerResponse> {
-    const url = this.API_URL_PRIVATE + '/computers/' + id;
+    const url = this.API_URL_AUTHENTICATION + '/computers/' + id;
     return this.httpClient.put<ServerResponse>(url, computer)
       .pipe(
         map(response => response),
@@ -58,7 +58,7 @@ export class ComputerHttpService {
   }
 
   delete(id: number | undefined): Observable<ServerResponse> {
-    const url = this.API_URL_PRIVATE + '/computers/' + id;
+    const url = this.API_URL_AUTHENTICATION + '/computers/' + id;
     return this.httpClient.delete<ServerResponse>(url)
       .pipe(
         map(response => response),

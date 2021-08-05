@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ComputerHttpService } from '../services/computer-http.service';
 import { ComputerModel } from '../models/computer.model';
+import { MessageService } from '../services/message.service';
 
 
 @Component({
@@ -15,7 +16,10 @@ export class ComputerComponent implements OnInit {
   computers: ComputerModel[] = [];
   formComputer: FormGroup;
 
-  constructor(private computerHttpService: ComputerHttpService, private formBuilder: FormBuilder) {
+  constructor(
+    private computerHttpService: ComputerHttpService,
+    private formBuilder: FormBuilder,
+    public messageService: MessageService) {
     this.formComputer = this.newFormGroupComputer();
   }
 
@@ -41,10 +45,10 @@ export class ComputerComponent implements OnInit {
     this.computerHttpService.getAll().subscribe(
       response => {
         console.log(response);
-        this.computers = response['data'];
+        this.messageService.success(response);
       },
       error => {
-        console.log(error);
+        this.messageService.error(error);
       }
     );
 
@@ -54,34 +58,42 @@ export class ComputerComponent implements OnInit {
     this.computerHttpService.getOne(1).subscribe(
       response => {
         console.log(response);
-        this.selectedComputer = response['data'];
+        this.messageService.success(response);
       },
       error => {
-        console.log(error);
+        this.messageService.error(error);
       }
     );
 
   }
-
-  createComputer(): void {
-    this.computerHttpService.create(this.selectedComputer).subscribe(
+  //post al servidor
+  storeComputer(computer: ComputerModel): void {
+    this.computerHttpService.store(computer).subscribe(
       response => {
-        console.log(response);
+        this.messageService.success(response.data);
       },
       error => {
-        console.log(error);
+        this.messageService.error(error);
       }
     );
 
+  }
+  saveComputer(computer: ComputerModel) {
+    const index = this.computers.findIndex(element => element.id === computer.id);
+    if (index === -1) {
+      this.computers.push(computer);
+    } else {
+      this.computers[index] = computer;
+    }
   }
 
   updateComputer(computer: ComputerModel): void {
     this.computerHttpService.update(computer.id, computer).subscribe(
       response => {
-        console.log(response);
+        this.messageService.success(response);
       },
       error => {
-        console.log(error);
+        this.messageService.error(error);
       }
     );
   }
@@ -93,7 +105,7 @@ export class ComputerComponent implements OnInit {
         this.removeComputer(computer);
       },
       error => {
-        console.log(error);
+        this.messageService.error(error);
       }
     );
   }
@@ -107,8 +119,12 @@ export class ComputerComponent implements OnInit {
     this.formComputer.patchValue(computer);
   }
 
-  onSubmit() {
-    console.log('onSubmit')
+  onSubmit(computer: ComputerModel) {
+    if (computer.id) {
+      this.updateComputer(computer);
+    } else {
+      this.storeComputer(computer);
+    }
   }
 
   get idField() {
@@ -121,6 +137,18 @@ export class ComputerComponent implements OnInit {
 
   get colorField() {
     return this.formComputer.controls['color'];
+  }
+
+  get codeField() {
+    return this.formComputer.controls['code'];
+  }
+
+  get weightField() {
+    return this.formComputer.controls['weigh'];
+  }
+
+  get modelField() {
+    return this.formComputer.controls['model'];
   }
 
 }

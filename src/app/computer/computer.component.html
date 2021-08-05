@@ -5,12 +5,12 @@
         Formulario Reactivo
     </ng-template>
     <div class="p-fluid">
-        <form [formGroup]="formComputer" (ngSubmit)="onSubmit()">
-            <div class="p-field">
+        <form [formGroup]="formComputer" (ngSubmit)="onSubmit(formComputer.value)">
+            <div class="formgrid grid">
                 <label for="id">ID</label>
                 <input pInputText type="text" id="id" formControlName="id">
             </div>
-            <div class="p-field">
+            <div class="formgrid grid">
                 <label for="id">BRAND</label>
                 <input pInputText type="text" id="brand" formControlName="brand">
                 <div *ngIf="brandField.invalid && (brandField.touched || brandField.dirty)">
@@ -25,35 +25,35 @@
                     </small>
                 </div>
             </div>
-            <div class="p-field">
+            <div class="formgrid grid">
                 <label for="id">COLOR</label>
                 <input pInputText type="text" id="color" formControlName="color">
             </div>
-            <div class="p-field">
+            <div class="formgrid grid">
                 <label for="id">CODE</label>
                 <input pInputText type="text" id="code" formControlName="code">
             </div>
-            <div class="p-field">
+            <div class="formgrid grid">
                 <label for="id">WEIGHT</label>
                 <input pInputText type="text" id="weight" formControlName="weight">
             </div>
-            <div class="p-field">
+            <div class="formgrid grid">
                 <label for="id">MODEL</label>
                 <input pInputText type="text" id="model" formControlName="model">
-                <div *ngIf="brandField.invalid && (brandField.touched || brandField.dirty)">
-                    <small *ngIf="brandField.errors?.required" class="p-error">
+                <div *ngIf="modelField.invalid && (modelField.touched || modelField.dirty)">
+                    <small *ngIf="modelField.errors?.required" class="p-error">
                         El campo es requerido
                     </small>
-                    <small *ngIf="brandField.errors?.maxlength" class="p-error">
+                    <small *ngIf="modelField.errors?.maxlength" class="p-error">
                         Máximo 5 carácteres
                     </small>
-                    <small *ngIf="brandField.errors?.minlength" class="p-error">
+                    <small *ngIf="modelField.errors?.minlength" class="p-error">
                         Mínimo 3 carácteres
                     </small>
                 </div>
             </div>
-            <div class="p-field">
-                <button pButton type="submit" label="Guardar" icon="pi pi-save" (click)="onSubmit()"></button>
+            <div class="formgrid grid">
+                <button pButton type="submit" label="Guardar" icon="pi pi-save"></button>
             </div>
         </form>
     </div>
