@@ -1,37 +1,68 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { ServerResponse } from '../models/server-response';
+import { Handler } from '../exceptions/handler';
+import { environment } from '../../environments/environment';
+import { MessageService } from './message.service';
+
 import { ComputerModel } from '../models/computer.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ComputerHttpService {
+
+  API_URL_PRIVATE: string = environment.API_URL_PRIVATE;
+  API_URL_PUBLIC: string = environment.API_URL_PUBLIC;
 
   constructor(private httpClient: HttpClient) {
 
   }
 
-  getAll() {
-    return this.httpClient.get('http://backend-quemag-santillan.test/api/v1/authentication/computers');
+  getAll(): Observable<ServerResponse> {
+    const url = this.API_URL_PRIVATE + '/computers';
+    return this.httpClient.get<ServerResponse>(url)
+      .pipe(
+        map(response => response),
+        catchError(Handler.render)
+      );
   }
 
-  getOne(id: number) {
-    const url = 'http://backend-quemag-santillan.test/api/v1/authentication/computers/' + id;
-    return this.httpClient.get(url);
+  getOne(id: number): Observable<ServerResponse> {
+    const url = this.API_URL_PRIVATE + '/computers/' + id;
+    return this.httpClient.get<ServerResponse>(url)
+      .pipe(
+        map(response => response),
+        catchError(Handler.render)
+      );
   }
 
-  create(computer: ComputerModel) {
-    const url = 'http://backend-quemag-santillan.test/api/v1/authentication/computers/';
-    return this.httpClient.post(url, computer);
+  store(computer: ComputerModel): Observable<ServerResponse> {
+    const url = this.API_URL_PRIVATE + '/computers';
+    return this.httpClient.post<ServerResponse>(url, computer)
+      .pipe(
+        map(response => response),
+        catchError(Handler.render)
+      );
   }
 
-  update(id: number | undefined, computer: ComputerModel) {
-    const url = 'http://backend-quemag-santillan.test/api/v1/authentication/computers/' + id;
-    return this.httpClient.put(url, computer);
+  update(id: number | undefined, computer: ComputerModel): Observable<ServerResponse> {
+    const url = this.API_URL_PRIVATE + '/computers/' + id;
+    return this.httpClient.put<ServerResponse>(url, computer)
+      .pipe(
+        map(response => response),
+        catchError(Handler.render)
+      );
   }
 
-  delete(id: number | undefined) {
-    const url = 'http://backend-quemag-santillan.test/api/v1/authentication/computers/' + id;
-    return this.httpClient.delete(url);
+  delete(id: number | undefined): Observable<ServerResponse> {
+    const url = this.API_URL_PRIVATE + '/computers/' + id;
+    return this.httpClient.delete<ServerResponse>(url)
+      .pipe(
+        map(response => response),
+        catchError(Handler.render)
+      );
   }
 }
